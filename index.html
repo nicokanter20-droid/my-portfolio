@@ -4,7 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nicholas Kanter — Portfolio</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nicholas Kanter — Portfolio"/>
+  <meta property="og:description" content="Psychology, brand strategy, and street photography."/>
+  <meta property="og:url" content="https://nicholaskanter.vercel.app"/>
+  <meta property="og:type" content="website"/>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+
   <style>
     /* ── RESET & BASE ─────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,7 +61,7 @@
       text-decoration: none;
     }
 
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
@@ -63,6 +71,17 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
+
+    .nav-resume {
+      color: var(--accent) !important;
+      border: 1px solid var(--accent);
+      padding: 0.35rem 0.85rem;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-resume:hover {
+      background: var(--accent);
+      color: var(--bg) !important;
+    }
 
     /* ── HERO ─────────────────────────────────────── */
     #hero {
@@ -119,44 +138,6 @@
       transition: color 0.2s, border-color 0.2s;
     }
     .hero-cta:hover { color: var(--accent); }
-
-    .hero-visual {
-      height: 80vh;
-      position: relative;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    /* Placeholder photo frame — replace with your actual <img> */
-    .hero-img-placeholder {
-      width: 100%;
-      height: 100%;
-      max-height: 600px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1rem;
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-img-placeholder::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 20px,
-        rgba(255,255,255,0.015) 20px,
-        rgba(255,255,255,0.015) 21px
-      );
-    }
-
-    .placeholder-icon { font-size: 2rem; opacity: 0.3; }
 
     /* ── SECTION SHARED ───────────────────────────── */
     section {
@@ -227,24 +208,12 @@
       filter: brightness(1) saturate(1);
     }
 
-    /* Photo placeholder tiles */
-    .photo-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted);
-      flex-direction: column; gap: 0.5rem;
-    }
-
-    .gallery-item:nth-child(odd) .photo-placeholder   { background: #141414; }
-    .gallery-item:nth-child(even) .photo-placeholder  { background: #121212; }
-
     .gallery-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 1rem;
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
       font-size: 11px; letter-spacing: 0.08em;
-      color: var(--text);
+      color: #fff;
       transform: translateY(100%);
       transition: transform 0.3s;
     }
@@ -318,6 +287,8 @@
       margin-bottom: 1.5rem;
     }
 
+    .project-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+
     .project-link {
       font-size: 11px;
       letter-spacing: 0.1em;
@@ -335,16 +306,6 @@
       grid-template-columns: 1fr 1.5fr;
       gap: 6rem;
       align-items: start;
-    }
-
-    .about-photo-placeholder {
-      aspect-ratio: 3/4;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 0.75rem;
-      color: var(--muted); font-size: 11px;
-      letter-spacing: 0.1em; text-transform: uppercase;
     }
 
     .about-body p {
@@ -381,6 +342,7 @@
       border: 1px solid var(--accent);
       color: var(--accent);
       text-decoration: none;
+      font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -412,6 +374,14 @@
       margin-top: 1.5rem;
       line-height: 1.8;
     }
+
+    .contact-sub a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .contact-sub a:hover { border-color: var(--accent); }
 
     form { display: flex; flex-direction: column; gap: 1.25rem; }
 
@@ -455,6 +425,24 @@
     }
     .submit-btn:hover { opacity: 0.85; }
 
+    /* Form status messages */
+    .form-status {
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      padding: 0.75rem 1rem;
+      display: none;
+    }
+    .form-status.success {
+      display: block;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .form-status.error {
+      display: block;
+      border: 1px solid #c0392b;
+      color: #c0392b;
+    }
+
     /* ── FOOTER ───────────────────────────────────── */
     footer {
       padding: 2rem 3rem;
@@ -479,22 +467,32 @@
 
     /* ── FADE-IN ANIMATION ────────────────────────── */
     .fade-in {
-      opacity: 1;
-      transform: none;
+      opacity: 0;
+      transform: translateY(24px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .fade-in.hidden { opacity: 0; transform: translateY(24px); }
-    .fade-in.visible { opacity: 1; transform: none; }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
 
     /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 900px) {
+      .gallery-grid,
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
       .nav-links { display: none; }
-      #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
-      .hero-visual { display: none; }
+      #hero { padding: 6rem 1.5rem 3rem; }
       section { padding: 4rem 1.5rem; }
+      #photography .section-header,
+      #projects .section-header { padding-left: 1.5rem; padding-right: 1.5rem; }
       #about .about-inner,
       #contact .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .gallery-grid,
+      .projects-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
@@ -509,6 +507,7 @@
       <li><a href="#projects">Projects</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="nicholas-kanter-resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-resume">Resume</a></li>
     </ul>
   </nav>
 
@@ -518,7 +517,7 @@
       <p class="hero-eyebrow">University of Massachusetts Amherst · Senior</p>
       <h1 class="hero-name">Nicholas<br/><em>Kanter</em></h1>
       <p class="hero-tagline">
-        I study how people think, how brands connect, and how light tells stories. 
+        I study how people think, how brands connect, and how light tells stories.
         This is where those worlds meet.
       </p>
       <a href="#photography" class="hero-cta">View Work ↓</a>
@@ -535,32 +534,32 @@
     <div class="gallery-grid">
 
       <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <img src="DSC01184.JPG" alt="Rainy cobblestone alley, Paris" />
+        <img src="DSC01184.JPG" alt="Rainy cobblestone alley, Paris" loading="lazy"/>
         <div class="gallery-caption">Rainy cobblestone alley, Paris</div>
       </div>
 
       <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <img src="DSC01262.JPG" alt="Normandy coastline" />
+        <img src="DSC01262.JPG" alt="Normandy coastline" loading="lazy"/>
         <div class="gallery-caption">Normandy coastline</div>
       </div>
 
       <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <img src="DSC01433.JPG" alt="Le Carrefour, Paris" />
+        <img src="DSC01433.JPG" alt="Le Carrefour, Paris" loading="lazy"/>
         <div class="gallery-caption">Le Carrefour, Paris</div>
       </div>
 
       <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <img src="DSC01476.JPG" alt="Le Monde on the Métro" />
+        <img src="DSC01476.JPG" alt="Le Monde on the Métro" loading="lazy"/>
         <div class="gallery-caption">Le Monde on the Métro</div>
       </div>
 
       <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <img src="DSC01898.JPG" alt="Motion study, grand staircase" />
+        <img src="DSC01898.JPG" alt="Motion study, grand staircase" loading="lazy"/>
         <div class="gallery-caption">Motion study, grand staircase</div>
       </div>
 
       <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <img src="DSC01509.JPG" alt="Cherry blossoms, Paris" />
+        <img src="DSC01509.JPG" alt="Cherry blossoms, Paris" loading="lazy"/>
         <div class="gallery-caption">Cherry blossoms, Paris</div>
       </div>
 
@@ -570,7 +569,7 @@
   <!-- Lightbox -->
   <div id="lightbox">
     <button id="lightbox-close" onclick="closeLightbox()">✕ Close</button>
-    <img id="lightbox-img" src="" alt="" />
+    <img id="lightbox-img" src="" alt=""/>
   </div>
 
   <!-- ── PROJECTS ── -->
@@ -582,42 +581,47 @@
     </div>
     <div class="projects-grid">
 
-      <!-- PROJECT CARD -->
       <div class="project-card fade-in">
         <p class="project-tag">UMass AdLab · Brand Strategy · 2024</p>
         <h3 class="project-title">Nate's Soap Co.</h3>
         <p class="project-desc">
-          A local student-founded soap company needed a full rebrand. I led strategy and creative direction: 
-          developing a new brand name, custom monogram logo, color palette, typography system, 
-          and packaging concepts rooted in the brand's core identity. Four simple, natural ingredients.
+          A local student-founded soap company needed a full rebrand. I led strategy and creative
+          direction: developing a new brand name, custom monogram logo, color palette, typography
+          system, and packaging concepts rooted in the brand's core identity. Four simple, natural
+          ingredients.
         </p>
-        <a href="nates-soap.pdf" class="project-link" target="_blank" rel="noopener">↗ View Brand Deck</a>
-        &nbsp;&nbsp;
-        <a href="nates-logo.pdf" class="project-link" target="_blank" rel="noopener">↗ Logo Vision</a>
+        <div class="project-links">
+          <a href="nates-soap.pdf" class="project-link" target="_blank" rel="noopener noreferrer">↗ View Brand Deck</a>
+          <a href="nates-logo.pdf" class="project-link" target="_blank" rel="noopener noreferrer">↗ Logo Vision</a>
+        </div>
       </div>
 
       <div class="project-card fade-in">
         <p class="project-tag">UMass AdLab · Digital Marketing · 2025</p>
         <h3 class="project-title">Nourish EcoVillage</h3>
         <p class="project-desc">
-          Developed an Instagram brand awareness campaign for a South African nonprofit. 
-          Led primary research via Qualtrics survey (n=40), comparing our proposed design 
-          against the existing profile. Our design drove 78% mission comprehension vs. 45% 
-          for the current page, a 33-point improvement.
+          Developed an Instagram brand awareness campaign for a South African nonprofit.
+          Led primary research via Qualtrics survey (n=40), comparing our proposed design
+          against the existing profile. Our design drove 78% mission comprehension vs. 45%
+          for the current page — a 33-point improvement.
         </p>
-        <a href="nourish.pdf" class="project-link" target="_blank" rel="noopener">↗ View Campaign Report</a>
+        <div class="project-links">
+          <a href="nourish.pdf" class="project-link" target="_blank" rel="noopener noreferrer">↗ View Campaign Report</a>
+        </div>
       </div>
 
       <div class="project-card fade-in">
         <p class="project-tag">UMass AdLab · Audience Research · 2025</p>
         <h3 class="project-title">Sprouting Readers</h3>
         <p class="project-desc">
-          Conducted 12 qualitative interviews with parents to build audience personas 
-          for a children's literacy tutoring business. Delivered target market analysis, 
-          competitive pricing research, and go-to-market recommendations spanning 
-          organic marketing, product differentiation, and local outreach strategy.
+          Conducted 12 qualitative interviews with parents to build audience personas for a
+          children's literacy tutoring business. Delivered target market analysis, competitive
+          pricing research, and go-to-market recommendations spanning organic marketing, product
+          differentiation, and local outreach strategy.
         </p>
-        <a href="sprouting-readers.pdf" class="project-link" target="_blank" rel="noopener">↗ View Marketing Report</a>
+        <div class="project-links">
+          <a href="sprouting-readers.pdf" class="project-link" target="_blank" rel="noopener noreferrer">↗ View Marketing Report</a>
+        </div>
       </div>
 
     </div>
@@ -631,28 +635,32 @@
       <div class="section-line"></div>
     </div>
     <div class="about-inner">
-      <div class="fade-in" style="aspect-ratio:3/4;overflow:hidden;">
-        <img src="IMG_4372.jpeg" alt="Nicholas Kanter" style="width:100%;height:100%;object-fit:cover;"/>
+
+      <div class="fade-in" style="aspect-ratio:3/4; overflow:hidden;">
+        <img src="IMG_4372.jpeg" alt="Nicholas Kanter"
+             style="width:100%; height:100%; object-fit:cover;" loading="lazy"/>
       </div>
+
       <div class="about-body fade-in">
         <p>
-          I'm Nicholas, a senior at <strong>UMass Amherst</strong> studying Psychology 
-          with a minor in Business. I spent this past spring studying at the 
-          <strong>Institut Catholique de Paris</strong>, which is where most of these 
+          I'm Nicholas, a senior at <strong>UMass Amherst</strong> studying Psychology
+          with a minor in Business. I spent this past spring studying at the
+          <strong>Institut Catholique de Paris</strong>, which is where most of these
           photos were shot.
         </p>
         <p>
-          At <strong>UMass AdLab</strong> I work as Project Manager, leading teams of 
-          15 to 20 students on campaigns for real clients. Last summer I interned at 
-          <strong>Matter Surfaces</strong> in marketing, working on copywriting, 
+          At <strong>UMass AdLab</strong> I work as Project Manager, leading teams of
+          15 to 20 students on campaigns for real clients. Last summer I interned at
+          <strong>Matter Surfaces</strong> in marketing, working on copywriting,
           brand consistency, and web content.
         </p>
         <p>
-          Outside of work I shoot street photography, DJ local events, and spend 
-          a lot of time thinking about what actually makes people pay attention. 
-          I'm currently looking for roles in marketing, fintech, sales, and operations. 
-      
+          Outside of work I shoot street photography, DJ local events, and spend
+          a lot of time thinking about what actually makes people pay attention.
+          Currently seeking entry-level roles in marketing, fintech, sales, and
+          operations — open to NYC and beyond.
         </p>
+
         <div class="skills-row">
           <span class="skill-chip">Consumer Psychology</span>
           <span class="skill-chip">Brand Strategy</span>
@@ -669,8 +677,12 @@
           <span class="skill-chip">SharePoint</span>
           <span class="skill-chip">French (Intermediate)</span>
         </div>
-        <a href="resume.pdf" class="resume-btn" download>↓ Download Resume</a>
+
+        <a href="nicholas-kanter-resume.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">
+          ↓ Download Resume
+        </a>
       </div>
+
     </div>
   </section>
 
@@ -682,52 +694,140 @@
       <div class="section-line"></div>
     </div>
     <div class="contact-inner">
+
       <div class="fade-in">
         <p class="contact-blurb">
           Let's make<br/><em>something</em><br/>together.
         </p>
         <p class="contact-sub">
           Open to internships, collaborations, and creative projects.<br/>
-          Reach me at <a href="/cdn-cgi/l/email-protection#bbd5d2d8d4d0dad5cfdec9898bfbdcd6dad2d795d8d4d6" style="color:var(--accent);text-decoration:none"><span class="__cf_email__" data-cfemail="07696e64686c6669736275353747606a666e6b2964686a">[email&#160;protected]</span></a>
+          You can also find me on
+          <a href="https://www.linkedin.com/in/nicholaskanter" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
         </p>
       </div>
 
-      <!-- Formspree: replace YOUR_FORM_ID with the ID from formspree.io (free account) -->
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="fade-in">
+      <!--
+        FORMSPREE SETUP:
+        1. Go to formspree.io and create a free account
+        2. Click "New Form" — copy your unique form ID
+        3. Replace YOUR_FORM_ID below with that ID
+        4. Formspree will email you a confirmation — click it to activate
+        Your email address never appears in this code.
+      -->
+      <form
+        id="contact-form"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+        class="fade-in"
+      >
+        <!-- Redirect back to your site after submit -->
+        <input type="hidden" name="_next" value="https://nicholaskanter.vercel.app"/>
+        <!-- Honeypot spam trap — do not remove -->
+        <input type="text" name="_gotcha" style="display:none"/>
+
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+          <input type="text" id="name" name="name" placeholder="Jane Smith" required/>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+          <input type="email" id="email" name="email" placeholder="jane@example.com" required/>
         </div>
         <div class="form-group">
           <label for="message">Message</label>
           <textarea id="message" name="message" placeholder="Tell me about your project or opportunity..." required></textarea>
         </div>
+
         <button type="submit" class="submit-btn">Send Message →</button>
+        <p class="form-status" id="form-status"></p>
       </form>
+
     </div>
   </section>
 
   <!-- ── FOOTER ── -->
   <footer>
-    <span>© 2025 Nicholas Kanter</span>
+    <span>© <span id="year"></span> Nicholas Kanter</span>
     <div class="footer-links">
-      <a href="https://www.linkedin.com/in/nicholaskanter" target="_blank">LinkedIn</a>
-      <a href="/cdn-cgi/l/email-protection#bad4d3d9d5d1dbd4cedfc8888afaddd7dbd3d694d9d5d7">Email</a>
+      <a href="https://www.linkedin.com/in/nicholaskanter" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="nicholas-kanter-resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
     </div>
   </footer>
 
-  <!-- ── JS ─────────────────────────────────────── -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Scroll-triggered fade-ins
+  <!-- ── JS ── -->
+  <script>
+    // ── Auto year ──────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Scroll fade-ins ────────────────────────────
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
+      entries.forEach((e, i) => {
         if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          // Stagger children
-          e.target.querySelectorAll('.fade-in').forEach((child, i) => {
-            setTimeout(() => child.classList.add('visible'), i * 80);
-          });
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Lightbox ───────────────────────────────────
+    function openLightbox(item) {
+      const img = item.querySelector('img');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-img').alt = img.alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close lightbox on background click
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // ── Contact form (AJAX — stays on page after submit) ──
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      btn.textContent = 'Sending...';
+      btn.style.opacity = '0.6';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          status.textContent = 'Message sent — I\'ll be in touch soon.';
+          status.className = 'form-status success';
+          form.reset();
+        } else {
+          throw new Error('Server error');
+        }
+      } catch {
+        status.textContent = 'Something went wrong. Try reaching me on LinkedIn.';
+        status.className = 'form-status error';
+      }
+
+      btn.textContent = 'Send Message →';
+      btn.style.opacity = '1';
+    });
+  </script>
+
+</body>
+</html>
